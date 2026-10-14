@@ -16,12 +16,9 @@ const route = useRoute();
 
 const topMenuItems = [
   { name: "Dashboard", icon: "grid_view", path: "/" },
-  { name: "Statistik", icon: "monitoring", path: "/analytics" },
   { name: "Piutang Bon", icon: "account_balance_wallet", path: "/debts" },
   { name: "Kontrak Cicilan", icon: "calendar_month", path: "/installments" },
-];
-
-const bottomMenuItems = [
+  { name: 'Keuangan & Laba', icon: 'payments', path: '/finance' },
   { name: "Pengaturan", icon: "settings", path: "/settings" },
   { name: "Logout", icon: "logout", path: "/logout" },
 ];
@@ -53,7 +50,7 @@ const mobileMenuItems = computed(() => [
     <!-- Group Atas -->
     <div
       :class="[
-        'bg-white p-2.5 flex flex-col justify-center shadow shrink-0 transition-all duration-300',
+        'bg-white p-2.5 flex flex-col justify-center shadow shrink-0 ',
         isExpanded ? 'w-52 rounded-3xl' : 'w-16 rounded-full',
       ]"
     >
@@ -62,7 +59,7 @@ const mobileMenuItems = computed(() => [
         :key="item.path"
         :to="item.path"
         :class="[
-          'h-11 flex items-center gap-3 transition-colors px-2.5',
+          'h-11 flex items-center gap-5 transition-colors px-2.5 mb-2',
           route.path === item.path
             ? 'bg-debt text-white shadow-sm rounded-full'
             : 'text-slate-500 hover:bg-debt-container hover:text-debt-dark rounded-full',
@@ -82,30 +79,6 @@ const mobileMenuItems = computed(() => [
     </div>
 
     <!-- Group Bawah (Settings, Logout) -->
-    <div
-      :class="[
-        'bg-white p-2.5 flex flex-col justify-center mt-3 shadow shrink-0 transition-all duration-300',
-        isExpanded ? 'w-52 rounded-3xl' : 'w-16 rounded-full',
-      ]"
-    >
-      <NuxtLink
-        v-for="item in bottomMenuItems"
-        :key="item.path"
-        :to="item.path"
-        class="h-11 flex items-center gap-3 text-slate-500 hover:text-debt-dark hover:bg-debt-container rounded-full transition px-2.5"
-        :title="item.name"
-      >
-        <span class="material-symbols-outlined text-[20px] shrink-0">
-          {{ item.icon }}
-        </span>
-        <span
-          v-if="isExpanded"
-          class="text-[13px] font-semibold whitespace-nowrap overflow-hidden"
-        >
-          {{ item.name }}
-        </span>
-      </NuxtLink>
-    </div>
   </aside>
 
   <!-- ==================== MOBILE FLOATING PILL BAR (Bawah md) ==================== -->

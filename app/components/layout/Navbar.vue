@@ -4,7 +4,7 @@ const navItems = [
   { name: "Dashboard", path: "/" },
   { name: "Daftar Piutang", path: "/debts" },
   { name: "Kontrak Cicilan", path: "/installments" },
-  { name: "Riwayat Mutasi", path: "/mutations" },
+  { name: 'Keuangan & Laba', icon: 'payments', path: '/finance' },
   { name: "Pelanggan", path: "/customers" },
 ];
 </script>

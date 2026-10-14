@@ -1,11 +1,20 @@
 <!-- pages/index.vue -->
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { useDashboardStore } from "~/stores/dashboard";
 import AnnualDebtChart from "~/components/dashboard/AnnualDebtChart.vue";
 import CommonStatCard from "~/components/common/StatCard.vue";
 import DashboardRecentMutationsTable from "~/components/dashboard/RecentMutationsTable.vue";
+import DueInstallmentsCard from "~/components/dashboard/DueInstallmentsCard.vue";
+import {
+  ArrowUpRight,
+  Wallet,
+  Users,
+  FileText,
+  CalendarClock,
+  ClockAlert
+} from "@lucide/vue";
 
 const dashboardStore = useDashboardStore();
 const { summary, isLoading, errorMessage } = storeToRefs(dashboardStore);
@@ -19,10 +28,10 @@ const handleYearChange = async (year: number) => {
 };
 
 const formatRupiah = (val: number) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
   }).format(val || 0);
 };
 
@@ -32,79 +41,170 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 h">
     <!-- Header Dashboard -->
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-xl font-bold text-slate-900">Ringkasan Piutang & Kredit</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Pemantauan real-time saldo bon kasir dan jadwal cicilan</p>
+        <h2 class="text-4xl font-bold text-black">Dashboard</h2>
+        <p class="text-sm text-debt-dark mt-0.5 italic">
+          Data Ringkasan Manajemen Piutang
+        </p>
       </div>
+    </div>
 
-      <!-- Tombol Refresh -->
-      <button 
-        type="button"
-        @click="dashboardStore.fetchSummary(selectedYear)" 
-        :disabled="isLoading"
-        class="h-9 px-3.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-2xs disabled:opacity-50"
+    <div class="flex flex-col lg:flex-row space-x-4 w-full">
+      <div
+        class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 max-w-sm w-full"
       >
-        <span class="material-symbols-outlined text-[16px]" :class="{ 'animate-spin': isLoading }">
-          refresh
-        </span>
-        {{ isLoading ? 'Memuat...' : 'Segarkan Data' }}
-      </button>
-    </div>
+        <!-- Header Card -->
+        <div class="flex items-center justify-between mb-4 px-1">
+          <h3 class="text-base font-bold text-slate-800">Data Statistik</h3>
+          <button
+            type="button"
+            class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:border-slate-400 transition"
+          >
+            <ArrowUpRight :size="18" />
+          </button>
+        </div>
 
-    <!-- Alert jika error -->
-    <div v-if="errorMessage" class="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium">
-      {{ errorMessage }}
-    </div>
+        <!-- Container Kartu Menumpuk (Lapisan bawah menimpa lapisan atas) -->
+        <div class="flex flex-col">
+          <!-- 1. ATAS: PUTIH (Tertindih oleh kartu biru) -->
+          <div
+            class="relative z-10 bg-debt-dark text-white p-4 pb-7 rounded-3xl"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-white text-debt flex items-center justify-center shrink-0"
+                >
+                  <Wallet :size="20" />
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-white">
+                    Pembayaran Hutang
+                  </p>
+                  <p class="text-xs text-debt-grey">Total belum bayar</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-sm font-bold text-white">
+                  {{
+                    isLoading
+                      ? "..."
+                      : formatRupiah(summary?.totalActiveDebt || 0)
+                  }}
+                </p>
+                <p class="text-[11px] text-slate-400">Piutang</p>
+              </div>
+            </div>
+          </div>
 
-    <!-- 1. BARIS ATAS: 4 KARTU KPI METRIK -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <CommonStatCard
-        title="Total Piutang Aktif"
-        :value="formatRupiah(summary?.totalActiveDebt || 0)"
-        icon="account_balance_wallet"
-        color-class="bg-rose-50 text-rose-700"
-        subtext="Total bon belum terbayar"
-        :loading="isLoading"
-      />
-      <CommonStatCard
-        title="Pelanggan Berhutang"
-        :value="`${summary?.totalIndebtedCustomers || 0} Orang`"
-        icon="group"
-        color-class="bg-amber-50 text-amber-700"
-        subtext="Jumlah pelanggan aktif berhutang"
-        :loading="isLoading"
-      />
-      <CommonStatCard
-        title="Kontrak Cicilan Aktif"
-        :value="`${summary?.activeInstallmentContracts || 0} Kontrak`"
-        icon="contract"
-        color-class="bg-blue-50 text-blue-700"
-        subtext="Kredit sedang berjalan"
-        :loading="isLoading"
-      />
-      <CommonStatCard
-        title="Target Tagihan Bulan Ini"
-        :value="formatRupiah(summary?.thisMonthInstallmentTarget || 0)"
-        icon="event_upcoming"
-        color-class="bg-emerald-50 text-emerald-700"
-        subtext="Jatuh tempo bulan berjalan"
-        :loading="isLoading"
-      />
-    </div>
+          <!-- 2. KEDUA: BIRU (Menindih putih, tertindih hijau) -->
+          <div
+            class="relative z-20 -mt-4 p-4 pb-7 bg-debt-container text-slate-900 rounded-3xl shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-debt text-white flex items-center justify-center shrink-0"
+                >
+                  <FileText :size="20" />
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-slate-900">
+                    Kontrak Cicilan Aktif
+                  </p>
+                  <p class="text-xs text-slate-600">Kredit berjalan</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-sm font-bold text-debt-dark">
+                  {{
+                    isLoading
+                      ? "..."
+                      : `${summary?.activeInstallmentContracts || 0} Kontrak`
+                  }}
+                </p>
+                <p class="text-[11px] text-slate-600">Aktif</p>
+              </div>
+            </div>
+          </div>
 
-    <!-- 2. BARIS TENGAH: GRAFIK BATANG TAHUNAN -->
-    <div>
-      <AnnualDebtChart
-        :stats="summary?.monthlyStatistics || []"
-        :selected-year="selectedYear"
-        :available-years="availableYears"
-        @change-year="handleYearChange"
-      />
-    </div>
+          <!-- 3. KETIGA: HIJAU / LIME (Menindih biru, tertindih hitam) -->
+          <div
+            class="relative z-30 -mt-4 p-4 pb-7 bg-debt text-white rounded-3xl shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-white text-debt-dark flex items-center justify-center shrink-0"
+                >
+                  <Users :size="20" />
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold">Pelanggan</p>
+                  <p class="text-xs">Pelanggan aktif</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-sm font-bold text-white">
+                  {{
+                    isLoading
+                      ? "..."
+                      : `${summary?.totalIndebtedCustomers || 0} Orang`
+                  }}
+                </p>
+                <p class="text-[11px] text-white">Total</p>
+              </div>
+            </div>
+          </div>
 
+          <!-- 4. PALING BAWAH: HITAM (Menindih kartu hijau di atasnya) -->
+          <div
+            class="relative z-40 -mt-4 p-4 rounded-3xl bg-white text-debt-dark shadow-lg"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-debt text-white flex items-center justify-center shrink-0"
+                >
+                  <CalendarClock :size="20" />
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold">Target Tagihan</p>
+                  <p class="text-xs text-gray-400">Jatuh tempo bulan ini</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-sm font-bold text-debt-dark">
+                  {{
+                    isLoading
+                      ? "..."
+                      : formatRupiah(summary?.thisMonthInstallmentTarget || 0)
+                  }}
+                </p>
+                <p class="text-[11px] text-slate-400">Bulan ini</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-6/12 w-full">
+        <AnnualDebtChart
+          :stats="summary?.monthlyStatistics || []"
+          :selected-year="selectedYear"
+          :available-years="availableYears"
+          @change-year="handleYearChange"
+        />
+      </div>
+      <div class="lg:w-3/12 w-full">
+        <DueInstallmentsCard
+          :items="summary?.dueInstallmentsThisMonth || []"
+          :loading="isLoading"
+        />
+      </div>
+    </div>
     <!-- 3. BARIS BAWAH: TABEL 5 MUTASI TERKINI -->
     <DashboardRecentMutationsTable
       :items="summary?.recentMutations || []"

@@ -71,8 +71,8 @@ const formatRibuan = (val: number) => {
           <span class="material-symbols-outlined text-[18px]">bar_chart</span>
         </div>
         <div>
-          <h4 class="text-[13px] font-bold text-debt-dark">Statistik Piutang Tahunan</h4>
-          <span class="text-[11px] text-slate-400">Januari - Desember</span>
+          <h4 class="text-lg font-bold text-debt-dark">Statistik Piutang Tahunan</h4>
+          <span class="text-xs text-slate-400">Januari - Desember</span>
         </div>
       </div>
 

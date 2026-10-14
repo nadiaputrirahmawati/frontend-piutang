@@ -5,6 +5,7 @@ import { ref } from 'vue';
 export interface RecentMutation {
   id: number;
   customerId: number;
+  customerName: string;
   referenceNumber: string;
   sourceType: string;
   mutationType: string;
@@ -21,6 +22,7 @@ export interface DashboardSummary {
   thisMonthInstallmentTarget: number;
   recentMutations: RecentMutation[];
   monthlyStatistics: MonthlyDebtStatistic[];
+  dueInstallmentsThisMonth: UpcomingInstallment[];
 }
 
 export interface MonthlyDebtStatistic {
@@ -30,6 +32,19 @@ export interface MonthlyDebtStatistic {
   totalDebtAdded: number;
   totalDebtPaid: number;
   isCurrentMonth: boolean;
+}
+
+export interface UpcomingInstallment {
+  scheduleId: number;
+  contractId: number;
+  contractNumber: string;
+  customerId: number;
+  customerName: string;
+  installmentNumber: number;
+  totalInstallments: number;
+  amount: number;
+  dueDate: string;
+  isOverdue: boolean;
 }
 
 

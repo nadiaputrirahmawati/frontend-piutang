@@ -13,6 +13,9 @@
 @theme {
   /* Variabel warna bertema Debt / Piutang */
   --color-debt: #800020;                  /* Warna marun utama */
+  --color-debt-light: #AD032E;            /* Warna marun lembut */
+  --color-debt-soft: #B50430;             /* Warna marun sangat lembut */
+  --color-debt-super-soft: #BC0432;       /* Warna marun sangat sangat lembut */
   --color-debt-dim: #FFF9F2;              /* Latar/background sangat lembut */
   --color-debt-container: #F2F2F2;        /* Area kontainer/kartu default */
   --color-debt-on-surface: #D45060;       /* Teks aksen/kontras */

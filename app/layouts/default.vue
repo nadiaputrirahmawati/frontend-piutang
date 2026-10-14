@@ -10,18 +10,18 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-    <div class="w-full  bg-debt-dim/70  p-4 sm:p-6 shadow-2xl flex flex-col gap-5 overflow-hidden">
+    <div class="w-full  bg-debt-dim/70  p-4 sm:p-6 ">
       
       <!-- TOP NAVBAR KAPSUL -->
       <LayoutNavbar />
 
       <!-- BODY: SIDEBAR + KONTEN DASHBOARD -->
-      <div class="flex items-start gap-4 sm:gap-6 flex-1 lg:mt-15 mt-0">
+      <div class="flex items-start gap-4 sm:gap-6 flex-1 lg:mt-19 mt-0">
         <!-- SIDEBAR ICON VERTICAL (EXPANDABLE) -->
         <LayoutSidebar :is-expanded="isSidebarExpanded" :toggle-sidebar="toggleSidebar" />
 
         <!-- AREA KONTEN -->
-        <main class="flex-1 min-w-0">
+        <main class="flex-1 min-w-0 h-full mb-25">
           <slot />
         </main>
       </div>
