@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
+* {
+  font-family: "Onest", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@theme {
+  /* Variabel warna bertema Debt / Piutang */
+  --color-debt: #800020;                  /* Warna marun utama */
+  --color-debt-dim: #FFF9F2;              /* Latar/background sangat lembut */
+  --color-debt-container: #F2F2F2;        /* Area kontainer/kartu default */
+  --color-debt-on-surface: #D45060;       /* Teks aksen/kontras */
+  --color-debt-container-high: #F3E6D5;   /* Kontainer aksen/highlight */
+  --color-debt-dark: #2D0000;             /* Varian paling gelap */
+  --color-debt-grey: #E3E3E3;             /* Garis tepi/border/elemen netral */
+}
+
+
+@font-face {
+  font-family: 'Pally-Regular';
+  src: url('../fonts/Pally-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../fonts/JetBrainsMono-Medium.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+.navbar {
+  font-family: 'Pally-Regular';
+}
