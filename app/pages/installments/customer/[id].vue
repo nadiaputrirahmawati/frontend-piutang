@@ -112,31 +112,29 @@ const handleConfirmPayment = async (payload: { scheduleId: number; paymentMethod
           <ArrowLeft :size="18" />
         </button>
         <div>
+          <h1 class="text-xl font-bold text-debt-dark"> Riwayat Cicilan</h1>
+        </div>
+        <!-- <div>
           <h1 class="text-xl font-bold text-debt-dark">Riwayat Cicilan: {{ customerName }}</h1>
           <p class="text-xs text-slate-500">ID Pelanggan: #{{ customerId }} • Memiliki {{ customerContracts.length }} Perjanjian Kredit</p>
-        </div>
-      </div>
-
-      <div class="text-right">
-        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Total Sisa Tagihan Toko</span>
-        <span class="text-xl font-black text-debt">{{ formatRupiah(totalCustomerRemaining) }}</span>
+        </div> -->
       </div>
     </div>
 
     <!-- Ringkasan Akumulasi Atas -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="bg-white border border-debt-grey/80 rounded-2xl p-4 shadow-2xs">
-        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Total Sudah Disetor</span>
+        <span class="text-[11px] font-bold text-black uppercase tracking-wider block">Total Sudah Disetor</span>
         <span class="text-lg font-black text-emerald-700 mt-0.5 block">{{ formatRupiah(totalCustomerPaid) }}</span>
       </div>
       <div class="bg-white border border-debt-grey/80 rounded-2xl p-4 shadow-2xs">
-        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Kewajiban Belum Terbayar</span>
+        <span class="text-[11px] font-bold text-black uppercase tracking-wider block">Kewajiban Belum Terbayar</span>
         <span class="text-lg font-black text-debt mt-0.5 block">{{ formatRupiah(totalCustomerRemaining) }}</span>
       </div>
     </div>
 
     <!-- SEMUA KONTRAK MILIK PELANGGAN INI -->
-    <div class="space-y-6">
+    <div class="grid grid-cols-3 gap-4">
       <div
         v-for="contract in customerContracts"
         :key="contract.id"

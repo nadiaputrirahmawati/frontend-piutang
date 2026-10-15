@@ -56,7 +56,6 @@ const getPaidProgress = (contract: InstallmentContractResponse) => {
           </div>
           <div>
             <h3 class="font-bold text-sm text-debt-dark leading-tight">{{ group.customerName }}</h3>
-            <span class="text-[10px] text-slate-400 font-mono">ID: #{{ group.customerId }}</span>
           </div>
         </div>
 
@@ -66,34 +65,34 @@ const getPaidProgress = (contract: InstallmentContractResponse) => {
       </div>
 
       <!-- 2. Ringkasan Finansial Gabungan Pelanggan Ini -->
-      <div class="grid grid-cols-2 gap-2 p-3 bg-debt-container/40 rounded-2xl text-xs">
+      <div class="grid grid-cols-2 gap-2 p-3 bg-debt-dim shadow-md rounded-2xl text-xs">
         <div>
-          <span class="text-[10px] text-slate-400 block font-medium">Total Angsuran / Bln</span>
+          <span class="text-[10px] text-black block font-medium">Total Angsuran / Bln</span>
           <span class="font-bold text-debt-dark">{{ formatRupiah(group.totalMonthlyBill) }}</span>
         </div>
         <div class="text-right">
-          <span class="text-[10px] text-slate-400 block font-medium">Total Sisa Pokok</span>
+          <span class="text-[10px] text-slate-600 block font-medium">Total Sisa Pokok</span>
           <span class="font-black text-debt">{{ formatRupiah(group.totalRemaining) }}</span>
         </div>
       </div>
 
       <!-- 3. Daftar Barang Cicilan (Hanya 1 Tombol Jadwal per Barang) -->
       <div class="space-y-2">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+        <span class="text-[10px] font-bold text-debt-dark uppercase tracking-wider block">
           Daftar Kontrak Barang:
         </span>
 
         <div 
           v-for="contract in group.contracts" 
           :key="contract.id"
-          class="p-3 bg-debt-dim/50 border border-debt-grey/60 rounded-2xl flex items-center justify-between gap-3"
+          class="p-3 bg-debt-container/60 shadow-2xs rounded-2xl flex items-center justify-between gap-3"
         >
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 font-bold text-xs text-debt-dark">
               <Package :size="13" class="text-debt shrink-0" />
               <span class="truncate">{{ contract.itemName }}</span>
             </div>
-            <div class="flex items-center gap-2 text-[10px] text-slate-400 font-mono mt-0.5">
+            <div class="flex items-center gap-2 text-[10px] text-slate-800 font-mono mt-0.5">
               <span>{{ getPaidProgress(contract) }}</span>
               <span>•</span>
               <span class="font-bold" :class="getContractRemaining(contract) > 0 ? 'text-debt' : 'text-emerald-700'">
@@ -121,10 +120,10 @@ const getPaidProgress = (contract: InstallmentContractResponse) => {
       <button
         type="button"
         @click="emit('viewDetail', group.customerId)"
-        class="w-full h-10 rounded-xl bg-white hover:bg-debt-container text-slate-700 hover:text-debt border border-debt-grey text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer"
+        class="w-full h-10 rounded-xl bg-debt-dark hover:bg-debt-container text-white hover:text-debt border border-debt-grey text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-2xs cursor-pointer"
       >
-        <History :size="14" class="text-slate-500" />
-        <span>Detail Riwayat Semua Cicilan {{ group.customerName }}</span>
+        <History :size="14" class="text-white" />
+        <span>Detail Riwayat  Cicilan </span>
         <ArrowRight :size="14" />
       </button>
     </div>

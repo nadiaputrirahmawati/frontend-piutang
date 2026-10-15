@@ -216,15 +216,6 @@ const totalCompletedContracts = computed(
       </div>
 
       <div class="flex items-center gap-2.5">
-        <button
-          type="button"
-          @click="installmentStore.fetchContracts()"
-          :disabled="isLoading"
-          class="h-10 px-3.5 bg-white border border-debt-grey hover:bg-debt-container text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
-        >
-          <RefreshCw :size="15" :class="{ 'animate-spin': isLoading }" />
-          <span>Refresh</span>
-        </button>
 
         <NuxtLink
           to="/installments/create"
@@ -298,18 +289,18 @@ const totalCompletedContracts = computed(
 
     <!-- Search & Filter Bar -->
     <div
-      class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-3 border border-debt-grey/80 rounded-2xl shadow-2xs"
+      class="flex flex-col sm:flex-row items-center justify-between gap-3  p-3  rounded-2xl shadow-2xs"
     >
       <div class="relative w-full sm:w-80">
         <Search
           :size="16"
-          class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+          class="absolute left-3.5 top-1/2 -translate-y-1/2 text-debt-dark pointer-events-none"
         />
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Cari pelanggan / barang / nomor kontrak..."
-          class="w-full h-9 pl-9 pr-3 bg-debt-dim/50 border border-debt-grey/80 rounded-xl text-xs font-semibold text-slate-800 outline-none focus:border-debt transition"
+          class="w-full h-9 pl-9 pr-3 bg-white border border-debt-dark rounded-xl text-xs font-semibold text-slate-800 outline-none focus:border-debt transition"
         />
       </div>
 

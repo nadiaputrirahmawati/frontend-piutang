@@ -191,7 +191,7 @@ const formatDate = (dateStr: string) => {
               >
             </div>
             <span
-              class="text-2xl mt-3 font-black text-amber-700 tracking-tight mt-0.5 block"
+              class="text-xl mt-3 font-black text-amber-700 tracking-tight mt-0.5 block"
             >
               {{ totalPelangganNunggak }} Orang
             </span>
